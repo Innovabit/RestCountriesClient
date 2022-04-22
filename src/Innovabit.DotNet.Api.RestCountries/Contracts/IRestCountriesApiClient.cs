@@ -12,11 +12,11 @@ namespace Innovabit.DotNet.Api.RestCountries.Contracts
         Task<IEnumerable<Country>> GetByCodeAsync(string code, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
         Task<IEnumerable<Country>> GetByCodesAsync(IEnumerable<string> codes, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
         Task<IEnumerable<Country>> GetByCurrencyAsync(string currency, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
-        Task<IEnumerable<Country>> GetByLanguageAsync(string language, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
+        Task<IEnumerable<Country>> GetByLanguageAsync(string lang, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
         Task<IEnumerable<Country>> GetByTranslationAsync(string translation, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
-        Task<IEnumerable<Country>> GetByCapitalCityAsync(string capitalCity, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
+        Task<IEnumerable<Country>> GetByCapitalCityAsync(string capital, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
         Task<IEnumerable<Country>> GetByRegionCityAsync(string region, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
-        Task<IEnumerable<Country>> GetBySubregionAsync(string subregion, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
+        Task<IEnumerable<Country>> GetBySubregionAsync(string region, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
         Task<IEnumerable<Country>> GetByDemonymAsync(string demonym, CancellationToken cancellationToken = default(CancellationToken), string[]? fields = default(string[]));
     }
 }

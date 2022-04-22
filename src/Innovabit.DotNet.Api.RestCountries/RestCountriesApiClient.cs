@@ -22,10 +22,10 @@ namespace Innovabit.DotNet.Api.RestCountries
             return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
         }
 
-        public async Task<IEnumerable<Country>> GetByCapitalCityAsync(string capitalCity, CancellationToken cancellationToken = default, string[]? fields = null)
+        public async Task<IEnumerable<Country>> GetByCapitalCityAsync(string capital, CancellationToken cancellationToken = default, string[]? fields = null)
         {
             var url = BaseAddress.AppendPathSegment("capital")
-                .AppendPathSegment(capitalCity);
+                .AppendPathSegment(capital);
 
             url = HandleFields(url, fields);
 
@@ -72,10 +72,10 @@ namespace Innovabit.DotNet.Api.RestCountries
             return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
         }
 
-        public async Task<IEnumerable<Country>> GetByLanguageAsync(string language, CancellationToken cancellationToken = default, string[]? fields = null)
+        public async Task<IEnumerable<Country>> GetByLanguageAsync(string lang, CancellationToken cancellationToken = default, string[]? fields = null)
         {
             var url = BaseAddress.AppendPathSegment("lang")
-                .AppendPathSegment(language);
+                .AppendPathSegment(lang);
 
             url = HandleFields(url, fields);
 
@@ -105,10 +105,10 @@ namespace Innovabit.DotNet.Api.RestCountries
             return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
         }
 
-        public async Task<IEnumerable<Country>> GetBySubregionAsync(string subregion, CancellationToken cancellationToken = default, string[]? fields = null)
+        public async Task<IEnumerable<Country>> GetBySubregionAsync(string region, CancellationToken cancellationToken = default, string[]? fields = null)
         {
             var url = BaseAddress.AppendPathSegment("subregion")
-                .AppendPathSegment(subregion);
+                .AppendPathSegment(region);
 
             url = HandleFields(url, fields);
 
