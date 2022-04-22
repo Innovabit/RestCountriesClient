@@ -12,6 +12,9 @@ namespace Innovabit.DotNet.Api.RestCountries.Converters
         {
             var token = JObject.ReadFrom(reader);
 
+            if (!token.HasValues)
+                return null;
+
             var values = token.Values<double>().ToArray();
 
             return new LatLng(values[0], values[1]);

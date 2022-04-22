@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{5431
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCall", "samples\SimpleCall\SimpleCall.csproj", "{2E31E2E7-D8E9-4095-9450-6672DCF3E81B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5380D0BF-F6B2-4669-88FA-CA7CDEFC97D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innovabit.DotNet.Api.RestCountries.Tests", "tests\Innovabit.DotNet.Api.RestCountries.Tests\Innovabit.DotNet.Api.RestCountries.Tests.csproj", "{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +32,14 @@ Global
 		{2E31E2E7-D8E9-4095-9450-6672DCF3E81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E31E2E7-D8E9-4095-9450-6672DCF3E81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E31E2E7-D8E9-4095-9450-6672DCF3E81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C6B0E469-C03F-4EE6-AAD5-84D8557ACA00} = {AB726FBA-C7B3-43F9-B7FE-5C54A603314E}
 		{2E31E2E7-D8E9-4095-9450-6672DCF3E81B} = {5431BA15-DA71-4274-A2A8-C24865128650}
+		{894C191C-8F7D-4DC9-B8CB-CC66CF95ADBA} = {5380D0BF-F6B2-4669-88FA-CA7CDEFC97D9}
 	EndGlobalSection
 EndGlobal
