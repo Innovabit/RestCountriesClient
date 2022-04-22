@@ -6,4 +6,3 @@
 [assembly: System.Reflection.AssemblyTitleAttribute("Innovabit.DotNet.Api.RestCountries")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Innovabit.DotNet.Api.RestCountries.Tests")]
-
