@@ -1,0 +1,48 @@
+name: Pull Request Merged
+
+on:
+  push: 
+    branches: [ develop ]
+
+env:
+  DOTNET_VERSION: 6.0.101
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    env:
+      PACKAGE_VERSION: ${{ secrets.VERSION_PREFIX }}.${{ github.run_number }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Create release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release/v${{ env.PACKAGE_VERSION }}
+          release_name: v${{ env.PACKAGE_VERSION }}
+          body: ${{ github.event.head_commit.message }}
+          draft: false
+          prerelease: false
+
+      - name: Set up .Net Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+      
+      - name: Install dependencies
+        run: dotnet restore
+      
+      - name: Build
+        run: dotnet build --configuration Release --no-restore /property:Version=${{ env.PACKAGE_VERSION }}
+
+      - name: Pack
+        run: dotnet pack --configuration Release /property:Version=${{ env.PACKAGE_VERSION }} --output packages
+
+      - name: Publish
+        working-directory: packages
+        run: dotnet nuget push Innovabit.DotNet.Api.RestCountries.${{ env.PACKAGE_VERSION }}.nupkg -k ${{ secrets.NUGET_API_TOKEN }} -s https://api.nuget.org/v3/index.json
