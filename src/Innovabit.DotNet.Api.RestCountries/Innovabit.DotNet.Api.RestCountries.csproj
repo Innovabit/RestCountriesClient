@@ -5,6 +5,22 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Authors>Juan Carlos Vega Neira</Authors>
+		<Company>Innovabit S.A.C.</Company>
+		<Description>Package for consuming RestCountries API.</Description>
+		<IncludeSymbols>true</IncludeSymbols>
+		<PackageId>Innovabit.DotNet.Api.RestCountries</PackageId>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>API,Rest,RestCountries</PackageTags>
+		<RepositoryUrl>https://github.com/Innovabit/RestCountriesClient</RepositoryUrl>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Flurl.Http" Version="3.2.2" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
