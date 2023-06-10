@@ -5,9 +5,12 @@ namespace Innovabit.DotNet.Api.RestCountries
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddCountriesApi(this IServiceCollection services)
+        public static IServiceCollection AddCountriesApi(this IServiceCollection services,
+            ServiceLifetime lifeTime = ServiceLifetime.Scoped)
         {
-            services.AddScoped<IRestCountriesApiClient, RestCountriesApiClient>();
+            var serviceDescriptor =
+                new ServiceDescriptor(typeof(IRestCountriesApiClient), typeof(RestCountriesApiClient), lifeTime);
+            services.Add(serviceDescriptor);
             return services;
         }
     }
