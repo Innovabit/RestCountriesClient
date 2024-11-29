@@ -4,9 +4,6 @@ on:
   push: 
     branches: [ develop ]
 
-env:
-  DOTNET_VERSION: 6.0.101
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -16,24 +13,24 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       
       - name: Create release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: release/v${{ env.PACKAGE_VERSION }}
-          release_name: v${{ env.PACKAGE_VERSION }}
+          name: v${{ env.PACKAGE_VERSION }}
           body: ${{ github.event.head_commit.message }}
           draft: false
           prerelease: false
 
       - name: Set up .Net Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-      
+          global-json-file: global.json
+    
       - name: Install dependencies
         run: dotnet restore
       
