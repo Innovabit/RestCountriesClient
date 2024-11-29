@@ -19,7 +19,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByCapitalCityAsync(string capital, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -29,7 +29,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByCodeAsync(string code, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -39,7 +39,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByCodesAsync(IEnumerable<string> codes, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -49,7 +49,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByCurrencyAsync(string currency, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -59,7 +59,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByDemonymAsync(string demonym, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -69,7 +69,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByLanguageAsync(string lang, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -79,7 +79,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByNameAsync(string name, bool fullText = false, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -92,7 +92,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByRegionCityAsync(string region, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -102,7 +102,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetBySubregionAsync(string region, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -112,7 +112,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         public async Task<IEnumerable<Country>> GetByTranslationAsync(string translation, CancellationToken cancellationToken = default, string[]? fields = null)
@@ -122,7 +122,7 @@ namespace Innovabit.DotNet.Api.RestCountries
 
             url = HandleFields(url, fields);
 
-            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken);
+            return await url.Prepare().GetJsonAsync<IEnumerable<Country>>(cancellationToken: cancellationToken);
         }
 
         private static Url HandleFields(Url inputUrl, string[]? fields = null)

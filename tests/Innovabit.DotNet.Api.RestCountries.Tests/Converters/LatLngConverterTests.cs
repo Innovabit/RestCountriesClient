@@ -1,46 +1,36 @@
 ﻿using Innovabit.DotNet.Api.RestCountries.Converters;
 using Innovabit.DotNet.Api.RestCountries.Models;
-using Newtonsoft.Json;
-using System.IO;
+using System.Text.Json;
 using Xunit;
 
 namespace Innovabit.DotNet.Api.RestCountries.Tests.Converters
 {
     public class LatLngConverterTests
     {
-        private readonly LatLngConverter _converter;
+        private readonly JsonSerializerOptions _options;
 
         public LatLngConverterTests()
         {
-            _converter = new LatLngConverter();
-        }
-
-        [Fact]
-        public void CanConvert_LatLng_True()
-        {
-            var canConvert = _converter.CanConvert(typeof(LatLng));
-            Assert.True(canConvert);
-        }
-
-        [Fact]
-        public void CanConvert_Other_False()
-        {
-            var canConvert = _converter.CanConvert(typeof(object));
-            Assert.False(canConvert);
+            _options = new JsonSerializerOptions
+            {
+                Converters = { new LatLngConverter() }
+            };
         }
 
         [Fact]
         public void ReadJson_DoubleArray_LatLng()
         {
             var json = "{\"coords\":[1.23,4.56]}";
-            var jsonReader = new JsonTextReader(new StringReader(json));
 
-            while (jsonReader.TokenType != JsonToken.StartArray)
-            {
-                jsonReader.Read();
-            }
+            // Deserializar el JSON
+            var document = JsonDocument.Parse(json);
+            var array = document.RootElement.GetProperty("coords");
 
-            var result = _converter.ReadJson(jsonReader, typeof(LatLng), null, JsonSerializer.CreateDefault());
+            var reader = new Utf8JsonReader(array.GetRawText().ToUtf8Bytes());
+            var converter = new LatLngConverter();
+
+            reader.Read(); // Avanzar al array
+            var result = converter.Read(ref reader, typeof(LatLng), _options);
 
             Assert.IsType<LatLng>(result);
 
@@ -53,16 +43,23 @@ namespace Innovabit.DotNet.Api.RestCountries.Tests.Converters
         public void ReadJson_Null_Null()
         {
             var json = "{\"coords\":null}";
-            var jsonReader = new JsonTextReader(new StringReader(json));
 
-            while (jsonReader.TokenType != JsonToken.Null)
-            {
-                jsonReader.Read();
-            }
+            // Deserializar el JSON
+            var document = JsonDocument.Parse(json);
+            var property = document.RootElement.GetProperty("coords");
 
-            var result = _converter.ReadJson(jsonReader, typeof(LatLng), null, JsonSerializer.CreateDefault());
+            var reader = new Utf8JsonReader(property.GetRawText().ToUtf8Bytes());
+            var converter = new LatLngConverter();
+
+            reader.Read(); // Avanzar al valor null
+            var result = converter.Read(ref reader, typeof(LatLng), _options);
 
             Assert.Null(result);
         }
+    }
+
+    public static class JsonExtensions
+    {
+        public static byte[] ToUtf8Bytes(this string json) => System.Text.Encoding.UTF8.GetBytes(json);
     }
 }
