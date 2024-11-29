@@ -1,27 +1,44 @@
 ﻿using Innovabit.DotNet.Api.RestCountries.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Innovabit.DotNet.Api.RestCountries.Converters
 {
-    internal class CountryStatusEnumConverter : StringEnumConverter
+    internal class CountryStatusEnumConverter : JsonConverter<Status>
     {
-        public override bool CanConvert(Type objectType)
+        public override Status Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            return objectType == typeof(Status);
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                var value = reader.GetString();
+                return value switch
+                {
+                    "user-assigned" => Status.UserAssigned,
+                    "officially-assigned" => Status.OfficiallyAssigned,
+                    _ => Status.Undefined
+                };
+            }
+
+            throw new JsonException($"Unexpected token parsing Status: {reader.TokenType}");
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, Status value, JsonSerializerOptions options)
         {
-            switch (reader.Value)
+            var stringValue = value switch
             {
-                case "user-assigned":
-                    return Status.UserAssigned;
-                case "officially-assigned":
-                    return Status.OfficiallyAssigned;
-                default:
-                    return Status.Undefined;
+                Status.UserAssigned => "user-assigned",
+                Status.OfficiallyAssigned => "officially-assigned",
+                _ => null
+            };
+
+            if (stringValue == null)
+            {
+                writer.WriteNullValue();
+            }
+            else
+            {
+                writer.WriteStringValue(stringValue);
             }
         }
     }

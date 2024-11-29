@@ -1,53 +1,31 @@
 ﻿using Innovabit.DotNet.Api.RestCountries.Converters;
 using Innovabit.DotNet.Api.RestCountries.Enums;
-using Newtonsoft.Json;
-using System.IO;
+using System.Text.Json;
 using Xunit;
 
 namespace Innovabit.DotNet.Api.RestCountries.Tests.Converters
 {
     public class CountryStatusEnumConverterTests
     {
-        private readonly CountryStatusEnumConverter _converter;
+        private readonly JsonSerializerOptions _options;
 
         public CountryStatusEnumConverterTests()
         {
-            _converter = new CountryStatusEnumConverter();
-        }
-
-        [Fact]
-        public void CanConvert_StatusType_True()
-        {
-            var theType = typeof(Status);
-
-            var canConvert = _converter.CanConvert(theType);
-
-            Assert.True(canConvert);
-        }
-
-        [Fact]
-        public void CanConvert_ObjectType_False()
-        {
-            var theType = typeof(object);
-
-            var canConvert = _converter.CanConvert(theType);
-
-            Assert.False(canConvert);
+            _options = new JsonSerializerOptions
+            {
+                Converters = { new CountryStatusEnumConverter() }
+            };
         }
 
         [Fact]
         public void ReadJson_ValidTokenUserAssigned_UserAssigned()
         {
-            var tokenValue = "{ \"status\":\"user-assigned\" }";
+            var json = "{ \"status\": \"user-assigned\" }";
 
-            var jsonReader = new JsonTextReader(new StringReader(tokenValue));
+            var document = JsonDocument.Parse(json);
+            var reader = document.RootElement.GetProperty("status").GetRawText();
 
-            while (jsonReader.TokenType != JsonToken.String)
-            {
-                jsonReader.Read();
-            }
-
-            var result = _converter.ReadJson(jsonReader, typeof(Status), tokenValue, JsonSerializer.CreateDefault());
+            var result = JsonSerializer.Deserialize<Status>(reader, _options);
 
             Assert.Equal(Status.UserAssigned, result);
         }
@@ -55,35 +33,57 @@ namespace Innovabit.DotNet.Api.RestCountries.Tests.Converters
         [Fact]
         public void ReadJson_ValidTokenOfficiallyAssigned_OfficiallyAssigned()
         {
-            var tokenValue = "{ \"status\":\"officially-assigned\" }";
+            var json = "{ \"status\": \"officially-assigned\" }";
 
-            var jsonReader = new JsonTextReader(new StringReader(tokenValue));
+            var document = JsonDocument.Parse(json);
+            var reader = document.RootElement.GetProperty("status").GetRawText();
 
-            while (jsonReader.TokenType != JsonToken.String)
-            {
-                jsonReader.Read();
-            }
-
-            var result = _converter.ReadJson(jsonReader, typeof(Status), tokenValue, JsonSerializer.CreateDefault());
+            var result = JsonSerializer.Deserialize<Status>(reader, _options);
 
             Assert.Equal(Status.OfficiallyAssigned, result);
         }
 
         [Fact]
-        public void ReadJson_ValidTokenAnything_Undefined()
+        public void ReadJson_InvalidToken_Undefined()
         {
-            var tokenValue = "{ \"status\":\"anything\" }";
+            var json = "{ \"status\": \"anything\" }";
 
-            var jsonReader = new JsonTextReader(new StringReader(tokenValue));
+            var document = JsonDocument.Parse(json);
+            var reader = document.RootElement.GetProperty("status").GetRawText();
 
-            while (jsonReader.TokenType != JsonToken.String)
-            {
-                jsonReader.Read();
-            }
-
-            var result = _converter.ReadJson(jsonReader, typeof(Status), tokenValue, JsonSerializer.CreateDefault());
+            var result = JsonSerializer.Deserialize<Status>(reader, _options);
 
             Assert.Equal(Status.Undefined, result);
+        }
+
+        [Fact]
+        public void WriteJson_ValidStatus_UserAssigned()
+        {
+            var status = Status.UserAssigned;
+
+            var json = JsonSerializer.Serialize(status, _options);
+
+            Assert.Equal("\"user-assigned\"", json);
+        }
+
+        [Fact]
+        public void WriteJson_ValidStatus_OfficiallyAssigned()
+        {
+            var status = Status.OfficiallyAssigned;
+
+            var json = JsonSerializer.Serialize(status, _options);
+
+            Assert.Equal("\"officially-assigned\"", json);
+        }
+
+        [Fact]
+        public void WriteJson_InvalidStatus_Null()
+        {
+            var status = Status.Undefined;
+
+            var json = JsonSerializer.Serialize(status, _options);
+
+            Assert.Equal("null", json);
         }
     }
 }

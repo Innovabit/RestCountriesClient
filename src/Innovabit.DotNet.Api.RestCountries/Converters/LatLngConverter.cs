@@ -1,28 +1,43 @@
 ﻿using Innovabit.DotNet.Api.RestCountries.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Innovabit.DotNet.Api.RestCountries.Converters
 {
     internal class LatLngConverter : JsonConverter<LatLng?>
     {
-        public override LatLng? ReadJson(JsonReader reader, Type objectType, LatLng? existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override LatLng? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var token = JObject.ReadFrom(reader);
-
-            if (!token.HasValues)
+            if (reader.TokenType == JsonTokenType.Null)
+            {
                 return null;
+            }
 
-            var values = token.Values<double>().ToArray();
+            if (reader.TokenType == JsonTokenType.StartArray)
+            {
+                var values = JsonSerializer.Deserialize<double[]>(ref reader, options);
+                if (values != null && values.Length == 2)
+                {
+                    return new LatLng(values[0], values[1]);
+                }
+            }
 
-            return new LatLng(values[0], values[1]);
+            throw new JsonException("Formato inválido para LatLng.");
         }
 
-        public override void WriteJson(JsonWriter writer, LatLng? value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, LatLng? value, JsonSerializerOptions options)
         {
-            throw new NotImplementedException();
+            if (value is null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+
+            writer.WriteStartArray();
+            writer.WriteNumberValue(value.Latitude);
+            writer.WriteNumberValue(value.Longitude);
+            writer.WriteEndArray();
         }
     }
 }

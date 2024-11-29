@@ -2,9 +2,8 @@
 using Flurl.Http;
 using Flurl.Http.Configuration;
 using Innovabit.DotNet.Api.RestCountries.Converters;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using NullValueHandling = Newtonsoft.Json.NullValueHandling;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Innovabit.DotNet.Api.RestCountries.Extensions
 {
@@ -12,21 +11,21 @@ namespace Innovabit.DotNet.Api.RestCountries.Extensions
     {
         internal static IFlurlRequest Prepare(this Url url)
         {
-            var jsonSerializerSettings = new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ObjectCreationHandling = ObjectCreationHandling.Replace,
-                Converters = new List<JsonConverter>
-                {
-                    new CountryStatusEnumConverter(),
-                    new LatLngConverter()
-                }
-            };
+            var request = new FlurlRequest(url);
 
-            return new FlurlRequest(url).ConfigureRequest(settings =>
+            request.Settings.JsonSerializer = new DefaultJsonSerializer(new JsonSerializerOptions
             {
-                settings.JsonSerializer = new NewtonsoftJsonSerializer(jsonSerializerSettings);
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+                Converters = {
+                    new CountryStatusEnumConverter(),
+                    new LatLngConverter(),
+                    new JsonStringEnumConverter()
+                }
             });
+
+            return request;
         }
     }
 }
