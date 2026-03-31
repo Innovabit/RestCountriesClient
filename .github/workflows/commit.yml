@@ -6,6 +6,7 @@ on:
       - 'feature/**'
       - 'bugfix/**'
       - 'hotfix/**'
+      - 'renovate/**'
 
 jobs:
   build:

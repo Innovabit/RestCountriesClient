@@ -9,7 +9,7 @@ var provider = services.BuildServiceProvider();
 
 var apiClient = provider.GetRequiredService<IRestCountriesApiClient>();
 
-var countries = await apiClient.GetAllAsync();
+var countries = await apiClient.GetAllAsync(fields: ["name", "flags", "subregion"]);
 
 var regions = string.Join(',', countries.GroupBy(x => x.Subregion).Select(x => x.Key).OrderBy(x => x).ToArray());
 

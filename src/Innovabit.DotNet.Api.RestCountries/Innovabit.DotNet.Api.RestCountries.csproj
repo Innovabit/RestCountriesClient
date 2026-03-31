@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.1;net9.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.1;net10.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	
@@ -25,8 +25,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Flurl.Http" Version="4.0.2" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
-		<PackageReference Include="System.Text.Json" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.5" />
+		<PackageReference Include="System.Text.Json" Version="10.0.5" />
 	</ItemGroup>
 
 	<ItemGroup>
